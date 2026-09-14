@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <!-- Google Fonts for elegant typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@300;400;500&display=swap" rel="family">
+    <style>
+        :root {
+            --bg-color: #0b090a;
+            --card-bg: rgba(22, 19, 21, 0.8);
+            --primary-love: #e63946;
+            --text-light: #f8f9fa;
+            --text-muted: #adb5bd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Floating Hearts Background Animation */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            bottom: -20px;
+            color: rgba(230, 57, 70, 0.2);
+            font-size: 20px;
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container Card */
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 10;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Heart Icon Animation */
+        .main-heart {
+            font-size: 60px;
+            color: var(--primary-love);
+            display: inline-block;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary-love);
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        p.letter {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #e9ecef;
+            margin-bottom: 35px;
+            text-align: justify;
+            font-weight: 300;
+        }
+
+        /* Interactive Music Button */
+        .music-btn {
+            background: linear-gradient(135deg, var(--primary-love), #b7094c);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .music-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+        }
+
+        .music-btn:active {
+            transform: translateY(1px);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="main-heart" onclick="triggerBurst()">❤️</div>
+        <h1>Finally Across the Table</h1>
+        <div class="subtitle">Our First Official Date</div>
+        
+        <p class="letter">
+            They say that connection takes time, but with you, it felt like rewriting code that was already perfectly aligned. Falling in love before we even sat down for our first dinner together might not follow the traditional loop, but there is absolutely nothing default about how I feel about you.<br><br>
+            Thank you for being my favorite reality, my constant thought, and the beautiful reason I am looking forward to everything that comes next. Here's to tonight, and every line of our story we're about to write together.
+        </p>
+
+        <!-- Replace the '#' URL with your actual Spotify / Apple Music playlist link -->
+        <a href="https://open.spotify.com" target="_blank" class="music-btn">
+            <span>🎵</span> Listen to Our Soundtrack
+        </a>
+
+        <footer> Built with love, just for you.</footer>
+    </div>
+
+    <script>
+        // Dynamically create falling background hearts
+        const particlesContainer = document.getElementById('particles');
+        const heartSymbols = ['❤️', '💖', '✨', '💕'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 4) + 's'; // 4-8s
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px'; // 15-30px
+            particlesContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Spawn a heart every 400ms
+        setInterval(createHeart, 400);
+
+        // Click interaction: Burst extra hearts when clicking the main heart
+        function triggerBurst() {
+            for(let i=0; i<10; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart-particle');
+                    heart.innerText = '❤️';
+                    heart.style.left = (40 + Math.random() * 20) + 'vw'; 
+                    heart.style.bottom = '50vh';
+                    heart.style.animationDuration = '3s';
+                    particlesContainer.appendChild(heart);
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>

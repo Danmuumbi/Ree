@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090507">
+    <meta name="description" content="A little piece of my heart, made especially for you.">
+
+    <title>For You ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #080506;
+            --bg-soft: #11090c;
+            --card: rgba(28, 15, 19, 0.62);
+            --card-border: rgba(255, 190, 190, 0.10);
+
+            --rose: #e85d75;
+            --rose-light: #ffb3c1;
+            --rose-dark: #9f3048;
+
+            --cream: #fff8f5;
+            --white: #ffffff;
+            --muted: #b9aeb1;
+
+            --serif: "Cormorant Garamond", serif;
+            --sans: "Inter", sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 20% 10%, rgba(190, 45, 70, .13), transparent 30%),
+                radial-gradient(circle at 90% 70%, rgba(255, 150, 170, .07), transparent 30%),
+                var(--bg);
+
+            color: var(--cream);
+            font-family: var(--sans);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* -------------------------
+           BACKGROUND
+        ------------------------- */
+
+        #particles {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            pointer-events: none;
+            opacity: .035;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(100px);
+            opacity: .12;
+            z-index: 0;
+        }
+
+        .glow.one {
+            background: var(--rose);
+            top: -250px;
+            left: -200px;
+        }
+
+        .glow.two {
+            background: #ff8da1;
+            right: -300px;
+            bottom: -200px;
+        }
+
+        /* -------------------------
+           PRELOADER
+        ------------------------- */
+
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #080506;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        #preloader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loader-heart {
+            font-size: 3rem;
+            animation: heartbeat 1.4s infinite;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            color: var(--muted);
+            font-size: .75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.18); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.12); }
+        }
+
+        /* -------------------------
+           INTRO SCREEN
+        ------------------------- */
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+
+            background:
+                radial-gradient(circle at center, rgba(130, 20, 40, .18), transparent 45%),
+                #080506;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+            text-align: center;
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+        #intro.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-inner {
+            max-width: 650px;
+        }
+
+        .intro-small {
+            color: var(--rose-light);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: .7rem;
+            margin-bottom: 25px;
+        }
+
+        .intro-title {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: .95;
+            margin-bottom: 25px;
+        }
+
+        .intro-title em {
+            color: var(--rose-light);
+        }
+
+        .intro-text {
+            color: #bdb2b5;
+            max-width: 480px;
+            margin: auto;
+            font-size: .95rem;
+            font-weight: 300;
+        }
+
+        .enter-btn {
+            margin-top: 45px;
+            border: 1px solid rgba(255,255,255,.15);
+            background: rgba(255,255,255,.04);
+            color: white;
+            padding: 15px 34px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-family: var(--sans);
+            letter-spacing: 2px;
+            font-size: .72rem;
+            text-transform: uppercase;
+            transition: .35s ease;
+        }
+
+        .enter-btn:hover {
+            background: var(--rose);
+            border-color: var(--rose);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(232,93,117,.25);
+        }
+
+        /* -------------------------
+           MAIN
+        ------------------------- */
+
+        main {
+            position: relative;
+            z-index: 2;
+            max-width: 760px;
+            margin: auto;
+            padding: 0 20px 100px;
+        }
+
+        section {
+            position: relative;
+            padding: 100px 0;
+        }
+
+        /* -------------------------
+           HERO
+        ------------------------- */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        .eyebrow {
+            color: var(--rose-light);
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-family: var(--serif);
+            font-size: clamp(4rem, 14vw, 8rem);
+            line-height: .82;
+            font-weight: 300;
+            letter-spacing: -3px;
+        }
+
+        .hero h1 span {
+            display: block;
+            font-style: italic;
+            color: var(--rose-light);
+        }
+
+        .hero-subtitle {
+            margin: 35px auto 0;
+            max-width: 550px;
+            color: #bdb3b5;
+            font-size: .95rem;
+            font-weight: 300;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #756c6f;
+            font-size: .65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll-indicator::after {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 45px;
+            margin: 12px auto 0;
+            background: linear-gradient(var(--rose), transparent);
+        }
+
+        /* -------------------------
+           GLASS CARD
+        ------------------------- */
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            padding: clamp(30px, 7vw, 55px);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.25),
+                inset 0 1px rgba(255,255,255,.03);
+        }
+
+        /* -------------------------
+           SECTION HEADINGS
+        ------------------------- */
+
+        .section-label {
+            color: var(--rose-light);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: .68rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 8vw, 4.3rem);
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 35px;
+        }
+
+        .section-title em {
+            color: var(--rose-light);
+        }
+
+        /* -------------------------
+           COUNTER
+        ------------------------- */
+
+        .counter-card {
+            text-align: center;
+        }
+
+        .counter-title {
+            font-family: var(--serif);
+            font-size: 1.7rem;
+            font-style: italic;
+            color: var(--rose-light);
+            margin-bottom: 35px;
+        }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .counter-box {
+            padding: 18px 5px;
+            border-radius: 17px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.045);
+        }
+
+        .counter-number {
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            font-weight: 300;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .counter-label {
+            color: #81777a;
+            font-size: .6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        /* -------------------------
+           LETTER
+        ------------------------- */
+
+        .letter {
+            font-family: var(--serif);
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            line-height: 1.8;
+            color: #e9e0e1;
+        }
+
+        .letter p {
+            margin-bottom: 28px;
+        }
+
+        .letter p:first-child::first-letter {
+            font-size: 4.5rem;
+            float: left;
+            line-height: .75;
+            padding-right: 10px;
+            color: var(--rose-light);
+        }
+
+        .signature {
+            margin-top: 45px;
+            font-style: italic;
+            color: var(--rose-light);
+            font-size: 1.6rem;
+        }
+
+        /* -------------------------
+           TIMELINE
+        ------------------------- */
+
+        .timeline {
+            position: relative;
+            margin-top: 20px;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(
+                transparent,
+                rgba(232,93,117,.5),
+                transparent
+            );
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 55px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -29px;
+            top: 7px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--rose);
+            box-shadow: 0 0 15px rgba(232,93,117,.8);
+        }
+
+        .timeline-date {
+            color: var(--rose-light);
+            font-size: .65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .timeline-title {
+            font-family: var(--serif);
+            font-size: 1.7rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-text {
+            color: #aaa0a3;
+            font-size: .9rem;
+            font-weight: 300;
+        }
+
+        /* -------------------------
+           PHOTO
+        ------------------------- */
+
+        .memory-photo {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            border-radius: 22px;
+            display: block;
+            filter: saturate(.8);
+            transition: .7s ease;
+        }
+
+        .memory-photo:hover {
+            filter: saturate(1);
+            transform: scale(1.015);
+        }
+
+        .photo-caption {
+            text-align: center;
+            margin-top: 18px;
+            font-family: var(--serif);
+            font-style: italic;
+            color: #a99da0;
+            font-size: 1.15rem;
+        }
+
+        /* -------------------------
+           THINGS I LOVE
+        ------------------------- */
+
+        .love-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .love-item {
+            padding: 18px 20px;
+            border-radius: 15px;
+            background: rgba(255,255,255,.025);
+            border: 1px solid rgba(255,255,255,.035);
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            transition: .3s ease;
+        }
+
+        .love-item:hover {
+            transform: translateX(5px);
+            background: rgba(232,93,117,.06);
+        }
+
+        .love-number {
+            color: var(--rose);
+            font-family: var(--serif);
+            font-size: 1.4rem;
+        }
+
+        .love-text {
+            color: #d2c8ca;
+            font-size: .9rem;
+        }
+
+        /* -------------------------
+           SOUNDTRACK
+        ------------------------- */
+
+        .music-card {
+            text-align: center;
+        }
+
+        .vinyl {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+
+            background:
+                repeating-radial-gradient(
+                    circle,
+                    #171114 0px,
+                    #171114 3px,
+                    #080608 4px,
+                    #080608 7px
+                );
+
+            border: 1px solid rgba(255,255,255,.1);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.5),
+                0 0 0 10px rgba(255,255,255,.015);
+
+            animation: spin 8s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl.playing {
+            animation-play-state: running;
+        }
+
+        .vinyl::after {
+            content: "♥";
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--rose);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .song-title {
+            font-family: var(--serif);
+            font-size: 2rem;
+        }
+
+        .song-artist {
+            color: #887d80;
+            font-size: .8rem;
+            margin-bottom: 25px;
+        }
+
+        .music-button {
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.04);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .music-button:hover {
+            border-color: var(--rose);
+            background: rgba(232,93,117,.1);
+        }
+
+        /* -------------------------
+           FUTURE
+        ------------------------- */
+
+        .future {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .future::before {
+            content: "∞";
+            position: absolute;
+            font-family: var(--serif);
+            font-size: 25rem;
+            line-height: 1;
+            color: rgba(255,255,255,.012);
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .future-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .future-question {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 7vw, 3.8rem);
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .future-text {
+            color: #aaa0a3;
+            max-width: 500px;
+            margin: auto;
+            font-size: .9rem;
+        }
+
+        /* -------------------------
+           FINAL
+        ------------------------- */
+
+        .final {
+            text-align: center;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .final-heart {
+            font-size: 2.5rem;
+            animation: heartbeat 1.8s infinite;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .final h2 {
+            font-family: var(--serif);
+            font-weight: 300;
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: .95;
+        }
+
+        .final h2 em {
+            color: var(--rose-light);
+        }
+
+        .final-message {
+            max-width: 550px;
+            margin: 30px auto;
+            color: #aaa0a3;
+            font-size: .9rem;
+        }
+
+        .closing {
+            margin-top: 50px;
+            color: var(--rose-light);
+            font-family: var(--serif);
+            font-style: italic;
+            font-size: 1.5rem;
+        }
+
+        /* -------------------------
+           FLOATING HEARTS
+        ------------------------- */
+
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5000;
+            animation: floatHeart 3s ease-out forwards;
+            font-size: 18px;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(.6);
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-180px) scale(1.2);
+            }
+        }
+
+        /* -------------------------
+           REVEAL
+        ------------------------- */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition:
+                opacity 1s ease,
+                transform 1s cubic-bezier(.16,1,.3,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* -------------------------
+           RESPONSIVE
+        ------------------------- */
+
+        @media(max-width:600px) {
+
+            main {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            section {
+                padding: 75px 0;
+            }
+
+            .hero {
+                min-height: 95vh;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .counter-grid {
+                gap: 6px;
+            }
+
+            .counter-box {
+                padding: 14px 3px;
+            }
+
+            .counter-number {
+                font-size: 1.35rem;
+            }
+
+            .counter-label {
+                font-size: .5rem;
+                letter-spacing: 1px;
+            }
+
+            .card {
+                border-radius: 23px;
+                padding: 30px 22px;
+            }
+
+            .letter {
+                font-size: 1.2rem;
+            }
+
+            .timeline {
+                padding-left: 24px;
+            }
+
+            .timeline-item::before {
+                left: -24px;
+            }
+
+            .timeline::before {
+                left: 1px;
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="locked">
+
+    <div id="preloader">
+        <div class="loader-content">
+            <span class="loader-heart">♥</span>
+            <div class="loader-text">Something made with love</div>
+        </div>
+    </div>
+
+    <div id="intro">
+        <div class="intro-inner">
+
+            <div class="intro-small">A little something for you</div>
+
+            <h1 class="intro-title">
+                Before you continue...
+            </h1>
+
+            <p class="intro-text">
+                I could have bought you something.
+                Instead, I decided to make you something.
+                Because some feelings deserve more than a gift bag.
+            </p>
+
+            <button class="enter-btn" id="enterBtn">
+                Open this little world
+            </button>
+
+        </div>
+    </div>
+
+    <canvas id="particles"></canvas>
+
+    <div class="grain"></div>
+    <div class="glow one"></div>
+    <div class="glow two"></div>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div>
+
+                <div class="eyebrow reveal">
+                    Made especially for you
+                </div>
+
+                <h1 class="reveal">
+                    For <span id="herNameHero">You</span>
+                </h1>
+
+                <p class="hero-subtitle reveal">
+                    A developer's way of saying something
+                    that code could never fully explain.
+                </p>
+
+            </div>
+
+            <div class="scroll-indicator">
+                Keep going
+            </div>
+
+        </section>
+
+
+        <!-- COUNTER -->
+        <section>
+
+            <div class="card counter-card reveal">
+
+                <div class="counter-title">
+                    Time since our story began...
+                </div>
+
+                <div class="counter-grid">
+
+                    <div class="counter-box">
+                        <div class="counter-number" id="days">0</div>
+                        <div class="counter-label">Days</div>
+                    </div>
+
+                    <div class="counter-box">
+                        <div class="counter-number" id="hours">00</div>
+                        <div class="counter-label">Hours</div>
+                    </div>
+
+                    <div class="counter-box">
+                        <div class="counter-number" id="minutes">00</div>
+                        <div class="counter-label">Minutes</div>
+                    </div>
+
+                    <div class="counter-box">
+                        <div class="counter-number" id="seconds">00</div>
+                        <div class="counter-label">Seconds</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LETTER -->
+        <section>
+
+            <div class="card reveal">
+
+                <div class="section-label">
+                    A letter
+                </div>
+
+                <h2 class="section-title">
+                    If I could put my feelings into words...
+                </h2>
+
+                <div class="letter" id="letterContent">
+
+                    <!-- Filled by JavaScript -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TIMELINE -->
+        <section>
+
+            <div class="reveal">
+
+                <div class="section-label">
+                    Our story
+                </div>
+
+                <h2 class="section-title">
+                    Little moments that became <em>everything.</em>
+                </h2>
+
+            </div>
+
+            <div class="card reveal">
+
+                <div class="timeline" id="timeline">
+
+                    <!-- Filled by JavaScript -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PHOTO -->
+        <section>
+
+            <div class="card reveal">
+
+                <div class="section-label">
+                    One of my favourite memories
+                </div>
+
+                <img
+                    id="memoryPhoto"
+                    class="memory-photo"
+                    src="images/memory.jpg"
+                    alt="A memory of us"
+                >
+
+                <div class="photo-caption" id="photoCaption">
+                    One moment. A thousand feelings.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- THINGS I LOVE -->
+        <section>
+
+            <div class="card reveal">
+
+                <div class="section-label">
+                    In case I don't say it enough
+                </div>
+
+                <h2 class="section-title">
+                    Things I <em>love</em> about you.
+                </h2>
+
+                <div class="love-list" id="loveList">
+
+                    <!-- Filled by JavaScript -->
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MUSIC -->
+        <section>
+
+            <div class="card music-card reveal">
+
+                <div class="section-label">
+                    Our soundtrack
+                </div>
+
+                <div class="vinyl" id="vinyl"></div>
+
+                <div class="song-title" id="songTitle">
+                    Our Song
+                </div>
+
+                <div class="song-artist" id="songArtist">
+                    Press play
+                </div>
+
+                <button class="music-button" id="musicButton">
+                    ▶ Play our song
+                </button>
+
+                <audio id="audio" preload="metadata"></audio>
+
+            </div>
+
+        </section>
+
+
+        <!-- FUTURE -->
+        <section>
+
+            <div class="card future reveal">
+
+                <div class="future-content">
+
+                    <div class="section-label">
+                        The part I look forward to
+                    </div>
+
+                    <div class="future-question">
+                        What if this is only the beginning?
+                    </div>
+
+                    <p class="future-text">
+                        More conversations.
+                        More laughter.
+                        More ordinary Tuesdays that somehow become
+                        our favourite memories.
+                        More places we've never been.
+                        More versions of us we've never met yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINAL -->
+        <section class="final">
+
+            <div class="reveal">
+
+                <span class="final-heart">♥</span>
+
+                <h2>
+                    I'm glad<br>
+                    <em>it's you.</em>
+                </h2>
+
+                <p class="final-message" id="finalMessage">
+                    And if you ever wonder whether you matter to me,
+                    come back to this page.
+                    I'll still be here.
+                    And I'll still choose you.
+                </p>
+
+                <div class="closing">
+                    — With all my heart
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+<script>
+
+    /* =========================================================
+       CONFIGURATION
+       Change ONLY this section.
+    ========================================================= */
+
+    const CONFIG = {
+
+        herName: "Her Name",
+
+        /*
+         * Use the date your story began.
+         * Example:
+         * "2026-02-14T20:30:00"
+         */
+        relationshipStart: "2026-02-14T20:30:00",
+
+        /*
+         * Your name.
+         */
+        yourName: "Your Name",
+
+        /*
+         * The main letter.
+         * Make this personal. This is the most important part.
+         */
+        letter: [
+
+            `There are some things I could probably explain better
+            if I wasn't trying to say them with a keyboard.`,
+
+            `Before we ever sat across from each other,
+            before tonight, before this first date,
+            there was already something between us that felt
+            strangely familiar.`,
+
+            `You became someone I looked forward to hearing from.
+            Someone whose messages could change the mood of my entire day.
+            Someone who slowly stopped feeling like "someone I met"
+            and started feeling like someone I couldn't imagine
+            not having in my life.`,
+
+            `And now I'm finally getting to sit across from you.
+            To see your smile without a screen between us.
+            To hear your laugh in the same room.
+            To experience a moment I've already imagined
+            more times than I'll admit.`,
+
+            `I don't know exactly where every road ahead of us will lead.
+            Nobody gets that certainty.`,
+
+            `But I know this:
+
+            I'm grateful that our paths crossed.
+            I'm grateful that I met you.
+            I'm grateful for every conversation,
+            every laugh, every late-night thought,
+            every little moment that brought us here.`,
+
+            `And if this is the first page of something much bigger,
+            then I hope we never stop writing it together.`
+
+        ],
+
+        /*
+         * Your actual story.
+         */
+        timeline: [
+
+            {
+                date: "THE FIRST HELLO",
+                title: "When our story quietly began",
+                text: "What started as a simple conversation became something I never expected."
+            },
+
+            {
+                date: "THE MOMENT I KNEW",
+                title: "Somewhere along the way...",
+                text: "I stopped wondering whether I liked you and started wondering how I ever went without you."
+            },
+
+            {
+                date: "THE FALL",
+                title: "We fell in love",
+                text: "Somewhere between the conversations, the laughter and the little things, you became home."
+            },
+
+            {
+                date: "TONIGHT",
+                title: "Our first date",
+                text: "Not the beginning of us. Just the first chapter we get to experience side by side."
+            }
+
+        ],
+
+        /*
+         * Things you genuinely love about her.
+         */
+        thingsILove: [
+
+            "The way you make even an ordinary conversation feel special.",
+
+            "Your smile — especially the one you don't realize you're making.",
+
+            "The way you care about the people you love.",
+
+            "How you can make me forget whatever was bothering me.",
+
+            "The little things about you that you probably don't even notice.",
+
+            "The person I get to be when I'm talking to you.",
+
+            "The fact that somehow, out of everyone in this world, I found you."
+
+        ],
+
+        photoCaption:
+            "One picture. One moment. A memory I never want to lose.",
+
+        /*
+         * Put your song inside:
+         *
+         * music/our-song.mp3
+         */
+        song: {
+            title: "Our Song",
+            artist: "For the two of us",
+            file: "music/our-song.mp3"
+        },
+
+        finalMessage:
+            `And if one day life gets busy and we forget
+            how beautiful these early days felt,
+            I hope you come back here.
+
+            Remember this version of us.
+
+            Remember that there was a time when
+            we were still discovering each other,
+            still learning each other's hearts,
+            and still dreaming about everything ahead.
+
+            And remember that I was already grateful
+            that it was you.`
+
+    };
+
+
+    /* =========================================================
+       INTRO
+    ========================================================= */
+
+    window.addEventListener("load", () => {
+
+        setTimeout(() => {
+
+            document.getElementById("preloader")
+                .classList.add("hide");
+
+        }, 1000);
+
+    });
+
+
+    const enterButton = document.getElementById("enterBtn");
+
+    enterButton.addEventListener("click", () => {
+
+        document.getElementById("intro")
+            .classList.add("hidden");
+
+        document.body.classList.remove("locked");
+
+        createHeartBurst();
+
+        setTimeout(() => {
+
+            document.querySelectorAll(".reveal")
+                .forEach((element, index) => {
+
+                    setTimeout(() => {
+                        element.classList.add("visible");
+                    }, index * 100);
+
+                });
+
+        }, 400);
+
+    });
+
+
+    /* =========================================================
+       PERSONALIZATION
+    ========================================================= */
+
+    document.getElementById("herNameHero").textContent =
+        CONFIG.herName;
+
+
+    /* =========================================================
+       LETTER
+    ========================================================= */
+
+    const letterContainer =
+        document.getElementById("letterContent");
+
+    CONFIG.letter.forEach((paragraph, index) => {
+
+        const p = document.createElement("p");
+
+        p.textContent = paragraph.trim();
+
+        letterContainer.appendChild(p);
+
+    });
+
+    const signature = document.createElement("div");
+
+    signature.className = "signature";
+
+    signature.textContent =
+        `Always, ${CONFIG.yourName} ❤️`;
+
+    letterContainer.appendChild(signature);
+
+
+    /* =========================================================
+       TIMELINE
+    ========================================================= */
+
+    const timeline =
+        document.getElementById("timeline");
+
+    CONFIG.timeline.forEach(item => {
+
+        const element =
+            document.createElement("div");
+
+        element.className =
+            "timeline-item";
+
+        element.innerHTML = `
+
+            <div class="timeline-date">
+                ${item.date}
+            </div>
+
+            <div class="timeline-title">
+                ${item.title}
+            </div>
+
+            <div class="timeline-text">
+                ${item.text}
+            </div>
+
+        `;
+
+        timeline.appendChild(element);
+
+    });
+
+
+    /* =========================================================
+       LOVE LIST
+    ========================================================= */
+
+    const loveList =
+        document.getElementById("loveList");
+
+    CONFIG.thingsILove.forEach((thing, index) => {
+
+        const item =
+            document.createElement("div");
+
+        item.className = "love-item";
+
+        item.innerHTML = `
+
+            <div class="love-number">
+                ${String(index + 1).padStart(2, "0")}
+            </div>
+
+            <div class="love-text">
+                ${thing}
+            </div>
+
+        `;
+
+        loveList.appendChild(item);
+
+    });
+
+
+    /* =========================================================
+       PHOTO
+    ========================================================= */
+
+    document.getElementById("photoCaption")
+        .textContent = CONFIG.photoCaption;
+
+
+    /* =========================================================
+       FINAL MESSAGE
+    ========================================================= */
+
+    document.getElementById("finalMessage")
+        .textContent = CONFIG.finalMessage;
+
+
+    /* =========================================================
+       LIVE LOVE COUNTER
+    ========================================================= */
+
+    const startDate =
+        new Date(CONFIG.relationshipStart);
+
+    function updateCounter() {
+
+        const now = new Date();
+
+        let difference =
+            now.getTime() - startDate.getTime();
+
+        if (difference < 0) {
+            difference = 0;
+        }
+
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const days =
+            Math.floor(difference / day);
+
+        const hours =
+            Math.floor((difference % day) / hour);
+
+        const minutes =
+            Math.floor((difference % hour) / minute);
+
+        const seconds =
+            Math.floor((difference % minute) / second);
+
+        document.getElementById("days")
+            .textContent = days;
+
+        document.getElementById("hours")
+            .textContent =
+            String(hours).padStart(2, "0");
+
+        document.getElementById("minutes")
+            .textContent =
+            String(minutes).padStart(2, "0");
+
+        document.getElementById("seconds")
+            .textContent =
+            String(seconds).padStart(2, "0");
+
+    }
+
+    updateCounter();
+
+    setInterval(updateCounter, 1000);
+
+
+    /* =========================================================
+       MUSIC
+    ========================================================= */
+
+    const audio =
+        document.getElementById("audio");
+
+    const musicButton =
+        document.getElementById("musicButton");
+
+    const vinyl =
+        document.getElementById("vinyl");
+
+    document.getElementById("songTitle")
+        .textContent = CONFIG.song.title;
+
+    document.getElementById("songArtist")
+        .textContent = CONFIG.song.artist;
+
+    audio.src = CONFIG.song.file;
+
+    musicButton.addEventListener("click", async () => {
+
+        try {
+
+            if (audio.paused) {
+
+                await audio.play();
+
+                musicButton.textContent =
+                    "❚❚ Pause our song";
+
+                vinyl.classList.add("playing");
+
+            } else {
+
+                audio.pause();
+
+                musicButton.textContent =
+                    "▶ Play our song";
+
+                vinyl.classList.remove("playing");
+
+            }
+
+        } catch (error) {
+
+            musicButton.textContent =
+                "Add your song to the folder";
+
+        }
+
+    });
+
+    audio.addEventListener("ended", () => {
+
+        musicButton.textContent =
+            "▶ Play our song";
+
+        vinyl.classList.remove("playing");
+
+    });
+
+
+    /* =========================================================
+       SCROLL REVEAL
+    ========================================================= */
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("visible");
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.12
+            }
+        );
+
+    document.querySelectorAll(".reveal")
+        .forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+
+    /* =========================================================
+       PARTICLES
+    ========================================================= */
+
+    const canvas =
+        document.getElementById("particles");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    let width;
+    let height;
+
+    function resizeCanvas() {
+
+        width =
+            canvas.width =
+            window.innerWidth;
+
+        height =
+            canvas.height =
+            window.innerHeight;
+
+    }
+
+    resizeCanvas();
+
+    window.addEventListener(
+        "resize",
+        resizeCanvas
+    );
+
+
+    class Particle {
+
+        constructor() {
+
+            this.reset();
+
+            this.y =
+                Math.random() * height;
+
+        }
+
+        reset() {
+
+            this.x =
+                Math.random() * width;
+
+            this.y =
+                height + 20;
+
+            this.size =
+                Math.random() * 1.4 + .3;
+
+            this.speed =
+                Math.random() * .35 + .08;
+
+            this.alpha =
+                Math.random() * .35 + .05;
+
+            this.wave =
+                Math.random() * Math.PI * 2;
+
+        }
+
+        update() {
+
+            this.y -= this.speed;
+
+            this.wave += .01;
+
+            this.x +=
+                Math.sin(this.wave) * .12;
+
+            if (this.y < -20) {
+
+                this.reset();
+
+            }
+
+        }
+
+        draw() {
+
+            ctx.beginPath();
+
+            ctx.arc(
+                this.x,
+                this.y,
+                this.size,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                `rgba(255,179,193,${this.alpha})`;
+
+            ctx.fill();
+
+        }
+
+    }
+
+
+    const particles =
+        Array.from(
+            { length: 70 },
+            () => new Particle()
+        );
+
+
+    function animateParticles() {
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+        particles.forEach(particle => {
+
+            particle.update();
+            particle.draw();
+
+        });
+
+        requestAnimationFrame(
+            animateParticles
+        );
+
+    }
+
+    animateParticles();
+
+
+    /* =========================================================
+       HEART BURST
+    ========================================================= */
+
+    function createHeartBurst() {
+
+        const symbols =
+            ["♥", "♡", "✦"];
+
+        for (let i = 0; i < 25; i++) {
+
+            setTimeout(() => {
+
+                const heart =
+                    document.createElement("div");
+
+                heart.className =
+                    "floating-heart";
+
+                heart.textContent =
+                    symbols[
+                        Math.floor(
+                            Math.random() *
+                            symbols.length
+                        )
+                    ];
+
+                heart.style.left =
+                    Math.random() * 100 + "vw";
+
+                heart.style.top =
+                    (65 + Math.random() * 30) + "vh";
+
+                heart.style.color =
+                    Math.random() > .4
+                        ? "#ff9eb0"
+                        : "#ffffff";
+
+                heart.style.fontSize =
+                    (10 + Math.random() * 18) + "px";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+
+                    heart.remove();
+
+                }, 3200);
+
+            }, i * 70);
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LITTLE INTERACTION
+    ========================================================= */
+
+    document.addEventListener("click", event => {
+
+        if (
+            event.target.tagName === "BUTTON" ||
+            event.target.closest("button")
+        ) {
+            return;
+        }
+
+        const heart =
+            document.createElement("div");
+
+        heart.className =
+            "floating-heart";
+
+        heart.textContent = "♥";
+
+        heart.style.left =
+            event.clientX + "px";
+
+        heart.style.top =
+            event.clientY + "px";
+
+        heart.style.color =
+            "#ff9eb0";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+
+            heart.remove();
+
+        }, 3000);
+
+    });
+
+</script>
+
+</body>
+</html>

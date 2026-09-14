@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #080608;
+            color: #f8f1f2;
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        body.locked {
+            overflow: hidden;
+        }
+
+        /* =========================
+           INTRO
+        ========================= */
+
+        .intro {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background:
+                radial-gradient(circle at center, rgba(126, 32, 61, .20), transparent 35%),
+                #080608;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition:
+                opacity 1s ease,
+                visibility 1s ease;
+        }
+
+        .intro.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-content {
+            text-align: center;
+            width: min(90%, 500px);
+        }
+
+        .intro-heart {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 35px;
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 26px;
+            color: #e9a7b8;
+
+            animation: heartbeat 2s infinite;
+        }
+
+        .intro-small {
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #8e8588;
+            margin-bottom: 18px;
+        }
+
+        .intro h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-weight: 400;
+            font-size: clamp(42px, 8vw, 72px);
+            line-height: 1;
+            margin-bottom: 38px;
+        }
+
+        .open-btn {
+            border: 1px solid rgba(255,255,255,.2);
+            background: transparent;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 100px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: .4s ease;
+        }
+
+        .open-btn:hover {
+            background: #f8f1f2;
+            color: #080608;
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(105, 24, 51, .16);
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow.one {
+            top: -200px;
+            left: -200px;
+        }
+
+        .glow.two {
+            right: -250px;
+            top: 45%;
+            background: rgba(68, 26, 49, .12);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 25px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .eyebrow {
+            color: #a88e95;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .hero h1 {
+            font-family: "Cormorant Garamond", serif;
+            font-weight: 300;
+            font-size: clamp(65px, 13vw, 145px);
+            line-height: .82;
+            letter-spacing: -4px;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .name {
+            font-style: italic;
+            color: #dca8b8;
+        }
+
+        .hero-subtitle {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(21px, 3vw, 29px);
+            color: #bcb0b4;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #686064;
+            font-size: 9px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator::after {
+            content: "";
+            display: block;
+            width: 1px;
+            height: 45px;
+            background: linear-gradient(#80747a, transparent);
+            margin: 12px auto 0;
+        }
+
+        /* =========================
+           LETTER
+        ========================= */
+
+        .letter {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 25px;
+        }
+
+        .letter-inner {
+            width: min(780px, 100%);
+        }
+
+        .section-label {
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #766b70;
+            margin-bottom: 45px;
+        }
+
+        .letter-text {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(26px, 4vw, 39px);
+            line-height: 1.55;
+            font-weight: 300;
+            color: #e7dfe2;
+        }
+
+        .letter-text p {
+            margin-bottom: 42px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .letter-text p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .letter-text .emphasis {
+            color: #e3a8b9;
+            font-style: italic;
+        }
+
+        .letter-text .short {
+            margin-top: 70px;
+            font-size: 1.18em;
+        }
+
+        /* =========================
+           THE WAIT
+        ========================= */
+
+        .wait-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 25px;
+        }
+
+        .wait-inner {
+            max-width: 760px;
+        }
+
+        .wait-line {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(35px, 6vw, 62px);
+            line-height: 1.2;
+            font-weight: 300;
+            color: #ddd2d6;
+
+            opacity: 0;
+            transform: translateY(35px);
+            transition: 1.2s ease;
+        }
+
+        .wait-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wait-line strong {
+            display: block;
+            margin-top: 22px;
+            color: #e4a6b8;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        /* =========================
+           ACTION
+        ========================= */
+
+        .action-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 25px;
+        }
+
+        .action-inner {
+            max-width: 850px;
+        }
+
+        .action-intro {
+            color: #80757a;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 9px;
+            margin-bottom: 45px;
+        }
+
+        .action-main {
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(45px, 8vw, 90px);
+            font-weight: 300;
+            line-height: .95;
+            color: #eee4e7;
+        }
+
+        .action-main span {
+            display: block;
+            color: #dca6b7;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        .action-text {
+            max-width: 590px;
+            margin: 45px auto 0;
+            color: #a59a9f;
+            font-size: 15px;
+            line-height: 2;
+            font-weight: 300;
+        }
+
+        /* =========================
+           SONG
+        ========================= */
+
+        .song-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 25px;
+        }
+
+        .song-card {
+            width: min(560px, 100%);
+            text-align: center;
+        }
+
+        .vinyl {
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            margin: 0 auto 45px;
+
+            background:
+                repeating-radial-gradient(
+                    circle,
+                    #171216 0px,
+                    #171216 3px,
+                    #0a0809 4px,
+                    #171216 5px
+                );
+
+            box-shadow:
+                0 0 0 8px rgba(255,255,255,.025),
+                0 25px 70px rgba(0,0,0,.5);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            animation: spin 14s linear infinite;
+            animation-play-state: paused;
+        }
+
+        .vinyl.playing {
+            animation-play-state: running;
+        }
+
+        .vinyl::before {
+            content: "";
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #7c304e;
+            border: 5px solid #111;
+        }
+
+        .vinyl::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #eee;
+        }
+
+        .song-label {
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #746a6e;
+            margin-bottom: 18px;
+        }
+
+        .song-title {
+            font-family: "Cormorant Garamond", serif;
+            font-size: 38px;
+            color: #e9dfe3;
+            margin-bottom: 7px;
+        }
+
+        .song-artist {
+            color: #857a7f;
+            font-size: 12px;
+        }
+
+        .play-btn {
+            margin-top: 35px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.18);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .play-btn:hover {
+            background: #eee4e7;
+            color: #080608;
+        }
+
+        /* =========================
+           FINAL
+        ========================= */
+
+        .final {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 25px;
+        }
+
+        .final-inner {
+            max-width: 760px;
+        }
+
+        .final-small {
+            color: #82777c;
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 45px;
+        }
+
+        .final h2 {
+            font-family: "Cormorant Garamond", serif;
+            font-weight: 300;
+            font-size: clamp(43px, 7vw, 75px);
+            line-height: 1.08;
+            color: #eee4e7;
+        }
+
+        .final h2 span {
+            display: block;
+            color: #dfa8b8;
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        .final-message {
+            margin: 45px auto 0;
+            max-width: 550px;
+            font-size: 14px;
+            line-height: 2;
+            color: #93888d;
+            font-weight: 300;
+        }
+
+        .signature {
+            margin-top: 65px;
+            font-family: "Cormorant Garamond", serif;
+            font-size: 27px;
+            color: #cbbbc1;
+            font-style: italic;
+        }
+
+        .heart-final {
+            margin-top: 35px;
+            color: #c86e89;
+            font-size: 18px;
+        }
+
+        /* =========================
+           REVEAL
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: 1.2s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           FLOATING PARTICLES
+        ========================= */
+
+        .particle {
+            position: fixed;
+            bottom: -20px;
+            pointer-events: none;
+            color: rgba(204, 101, 133, .35);
+            font-size: 12px;
+            z-index: 2;
+            animation: rise linear forwards;
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                transform: translate(-50%, 8px);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rise {
+            from {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: .6;
+            }
+
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .letter {
+                padding: 100px 24px;
+            }
+
+            .letter-text {
+                font-size: 26px;
+                line-height: 1.55;
+            }
+
+            .letter-text p {
+                margin-bottom: 35px;
+            }
+
+            .vinyl {
+                width: 155px;
+                height: 155px;
+            }
+
+            .final-message {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body class="locked">
+
+    <!-- =========================
+         INTRO
+    ========================= -->
+
+    <div class="intro" id="intro">
+
+        <div class="intro-content">
+
+            <div class="intro-heart">♡</div>
+
+            <div class="intro-small">
+                I made something for you
+            </div>
+
+            <h1>
+                Just you.
+            </h1>
+
+            <button class="open-btn" id="openBtn">
+                Open
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <main class="page">
+
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+
+
+        <!-- =========================
+             HERO
+        ========================= -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow reveal">
+                    There is something I want you to know
+                </div>
+
+                <h1 class="reveal">
+                    <span>Hey</span>
+                    <span class="name" id="heroName">You</span>
+                </h1>
+
+                <div class="hero-subtitle reveal">
+                    I still remember the moment I first saw you.
+                </div>
+
+            </div>
+
+            <div class="scroll-indicator">
+                keep reading
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LETTER
+        ========================= -->
+
+        <section class="letter">
+
+            <div class="letter-inner">
+
+                <div class="section-label">
+                    The truth is…
+                </div>
+
+                <div class="letter-text">
+
+                    <p>
+                        I don't know if I have ever told you exactly what
+                        happened to me the first time I saw you.
+                    </p>
+
+                    <p>
+                        I didn't need weeks of talking.
+                        I didn't need months of knowing you.
+                        I didn't need time to figure out how I felt.
+                    </p>
+
+                    <p>
+                        I just looked at you...
+                    </p>
+
+                    <p class="emphasis">
+                        and something in me already knew.
+                    </p>
+
+                    <p>
+                        Maybe it doesn't make sense.
+                        Maybe love isn't supposed to happen that quickly.
+                        But I can't change what I felt.
+                    </p>
+
+                    <p>
+                        I fell for you.
+                    </p>
+
+                    <p>
+                        And the strange thing is...
+                        I wasn't looking for it.
+                    </p>
+
+                    <p>
+                        I wasn't sitting there thinking that I was about
+                        to meet someone who would become important to me.
+                    </p>
+
+                    <p>
+                        Then there you were.
+                    </p>
+
+                    <p class="emphasis">
+                        And suddenly, you were.
+                    </p>
+
+                    <p>
+                        I love you.
+                        And I know those three words are easy to say.
+                    </p>
+
+                    <p>
+                        Maybe too easy.
+                    </p>
+
+                    <p>
+                        Because I know that for you,
+                        hearing me say it isn't enough.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             THE WAIT
+        ========================= -->
+
+        <section class="wait-section">
+
+            <div class="wait-inner">
+
+                <div class="wait-line reveal">
+                    I know what you're waiting for.
+
+                    <strong>
+                        You want to see it.
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ACTION
+        ========================= -->
+
+        <section class="action-section">
+
+            <div class="action-inner">
+
+                <div class="action-intro reveal">
+                    So this is my answer
+                </div>
+
+                <div class="action-main reveal">
+                    Don't believe
+                    <span>just my words.</span>
+                </div>
+
+                <p class="action-text reveal">
+                    I don't want to convince you with a beautiful message.
+                    I don't want to pressure you into believing everything
+                    I feel.
+
+                    <br><br>
+
+                    I want to show you.
+
+                    <br><br>
+
+                    In the way I treat you.
+                    In the way I show up.
+                    In the things I remember.
+                    In the things I do when nobody is watching.
+
+                    <br><br>
+
+                    I want my actions to slowly answer every question
+                    you still have about me.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SONG
+        ========================= -->
+
+        <section class="song-section">
+
+            <div class="song-card reveal">
+
+                <div class="vinyl" id="vinyl"></div>
+
+                <div class="song-label">
+                    I want you to hear this
+                </div>
+
+                <div class="song-title" id="songTitle">
+                    Our Song
+                </div>
+
+                <div class="song-artist" id="songArtist">
+                    A song for you
+                </div>
+
+                <button class="play-btn" id="playBtn">
+                    ▶
+                </button>
+
+              <audio id="song" src="music/Stephen%20Sanchez%20-%20Until%20I%20Found%20You%20%28Official%20Video%29.mp4"></audio>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FINAL
+        ========================= -->
+
+        <section class="final">
+
+            <div class="final-inner">
+
+                <div class="final-small reveal">
+                    And one last thing
+                </div>
+
+                <h2 class="reveal">
+                    You don't have to believe
+                    <span>every word.</span>
+                </h2>
+
+                <p class="final-message reveal">
+
+                    Just watch what I do.
+
+                    <br><br>
+
+                    Because I don't want this page to be the thing
+                    that proves I love you.
+
+                    <br><br>
+
+                    I want the way I love you
+                    to become something you don't have to question.
+
+                </p>
+
+                <div class="signature reveal" id="signature">
+                    — Your Name
+                </div>
+
+                <div class="heart-final reveal">
+                    ♥
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script>
+
+        /* =====================================================
+           CHANGE THESE
+        ===================================================== */
+
+        const HER_NAME = "Mary Mutheu";
+        const YOUR_NAME = "Dan";
+
+        const SONG_TITLE = "This Reminded Me of You";
+        const SONG_ARTIST = "A song for you";
+
+
+        /* =====================================================
+           BASIC SETUP
+        ===================================================== */
+
+        document.getElementById("heroName").textContent = HER_NAME;
+        document.getElementById("signature").textContent = "— " + YOUR_NAME;
+
+        document.getElementById("songTitle").textContent = SONG_TITLE;
+        document.getElementById("songArtist").textContent = SONG_ARTIST;
+
+
+        /* =====================================================
+           OPEN PAGE
+        ===================================================== */
+
+        const intro = document.getElementById("intro");
+        const openBtn = document.getElementById("openBtn");
+
+        openBtn.addEventListener("click", () => {
+
+            intro.classList.add("hidden");
+
+            document.body.classList.remove("locked");
+
+            setTimeout(() => {
+                revealElements();
+            }, 700);
+
+        });
+
+
+        /* =====================================================
+           SCROLL REVEALS
+        ===================================================== */
+
+        const revealItems = document.querySelectorAll(
+            ".reveal, .letter-text p, .wait-line"
+        );
+
+        function revealElements() {
+
+            const trigger = window.innerHeight * 0.82;
+
+            revealItems.forEach((element) => {
+
+                const rect = element.getBoundingClientRect();
+
+                if (rect.top < trigger) {
+                    element.classList.add("visible");
+                }
+
+            });
+
+        }
+
+        window.addEventListener("scroll", revealElements);
+
+        window.addEventListener("load", () => {
+
+            setTimeout(() => {
+
+                const firstElements =
+                    document.querySelectorAll(".hero .reveal");
+
+                firstElements.forEach((element, index) => {
+
+                    setTimeout(() => {
+                        element.classList.add("visible");
+                    }, index * 350);
+
+                });
+
+            }, 900);
+
+        });
+
+
+        /* =====================================================
+           SONG PLAYER
+        ===================================================== */
+
+        const audio = document.getElementById("song");
+        const playBtn = document.getElementById("playBtn");
+        const vinyl = document.getElementById("vinyl");
+
+        playBtn.addEventListener("click", () => {
+
+            if (audio.paused) {
+
+                audio.play();
+
+                vinyl.classList.add("playing");
+
+                playBtn.textContent = "Ⅱ";
+
+            } else {
+
+                audio.pause();
+
+                vinyl.classList.remove("playing");
+
+                playBtn.textContent = "▶";
+
+            }
+
+        });
+
+        audio.addEventListener("ended", () => {
+
+            vinyl.classList.remove("playing");
+            playBtn.textContent = "▶";
+
+        });
+
+
+        /* =====================================================
+           SOFT FLOATING HEARTS
+        ===================================================== */
+
+        function createHeart() {
+
+            const heart = document.createElement("div");
+
+            heart.className = "particle";
+
+            heart.textContent = Math.random() > .5 ? "♡" : "·";
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            heart.style.animationDuration =
+                (8 + Math.random() * 8) + "s";
+
+            heart.style.fontSize =
+                (8 + Math.random() * 10) + "px";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 17000);
+        }
+
+        setInterval(createHeart, 1800);
+
+    </script>
+
+</body>
+</html>
